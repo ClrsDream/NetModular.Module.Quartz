@@ -7,8 +7,6 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using NetModular.Lib.Quartz.Abstractions;
-using NetModular.Lib.Quartz.Core;
-using NetModular.Lib.Utils.Core.Extensions;
 using NetModular.Module.Quartz.Domain.Job;
 using NetModular.Module.Quartz.Domain.JobHttp;
 using HttpMethod = NetModular.Lib.Utils.Core.Enums.HttpMethod;
@@ -19,19 +17,19 @@ namespace NetModular.Module.Quartz.Quartz
     /// Http请求任务
     /// </summary>
     [Description("Http请求任务")]
-    public class HttpJob : JobTaskAbstract
+    public class HttpTask : TaskAbstract
     {
         private readonly IJobRepository _repository;
         private readonly IJobHttpRepository _httpRepository;
         private readonly IHttpClientFactory _clientFactory;
-        public HttpJob(IJobLogger logger, IJobRepository repository, IJobHttpRepository httpRepository, IHttpClientFactory clientFactory) : base(logger)
+        public HttpTask(ITaskLogger logger, IJobRepository repository, IJobHttpRepository httpRepository, IHttpClientFactory clientFactory) : base(logger)
         {
             _repository = repository;
             _httpRepository = httpRepository;
             _clientFactory = clientFactory;
         }
 
-        public override async Task Execute(IJobTaskContext context)
+        public override async Task Execute(ITaskExecutionContext context)
         {
             var idData = context.JobExecutionContext.JobDetail.JobDataMap["id"];
             if (idData == null)

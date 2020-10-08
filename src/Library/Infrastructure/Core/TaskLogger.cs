@@ -1,31 +1,31 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+using NetModular.Lib.Config.Abstractions;
 using NetModular.Lib.Quartz.Abstractions;
 using NetModular.Module.Quartz.Domain.JobLog;
-using NetModular.Module.Quartz.Infrastructure.Options;
 
-namespace NetModular.Module.Quartz.Web.Core
+namespace NetModular.Module.Quartz.Infrastructure.Core
 {
     /// <summary>
     /// 任务日志
     /// </summary>
-    public class JobLogger : IJobLogger
+    public class TaskLogger : ITaskLogger
     {
         private readonly IJobLogRepository _repository;
-        private readonly QuartzOptions _options;
+        private readonly IConfigProvider _configProvider;
 
-        public JobLogger(IJobLogRepository repository, IOptionsMonitor<QuartzOptions> optionsMonitor)
+        public TaskLogger(IJobLogRepository repository, IConfigProvider configProvider)
         {
             _repository = repository;
-            _options = optionsMonitor.CurrentValue;
+            _configProvider = configProvider;
         }
 
         public Guid JobId { get; set; }
 
         public async Task Info(string msg)
         {
-            if (_options.DisabledLogger)
+            var config = _configProvider.Get<QuartzConfig>();
+            if (!config.Logger)
                 return;
 
             var entity = new JobLogEntity
@@ -41,7 +41,8 @@ namespace NetModular.Module.Quartz.Web.Core
 
         public async Task Debug(string msg)
         {
-            if (_options.DisabledLogger)
+            var config = _configProvider.Get<QuartzConfig>();
+            if (!config.Logger)
                 return;
 
             var entity = new JobLogEntity
@@ -57,7 +58,8 @@ namespace NetModular.Module.Quartz.Web.Core
 
         public async Task Error(string msg)
         {
-            if (_options.DisabledLogger)
+            var config = _configProvider.Get<QuartzConfig>();
+            if (!config.Logger)
                 return;
 
             var entity = new JobLogEntity

@@ -2,11 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetModular.Lib.Mapper.AutoMapper" Version="1.5.0" />
-    <PackageReference Include="NetModular.Lib.Quartz.Abstractions" Version="1.5.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="NetModular.Lib.Mapper.AutoMapper" Version="2.0.0" />
+    <PackageReference Include="NetModular.Lib.Quartz.Abstractions" Version="2.0.0" />
   </ItemGroup>
   
   <ItemGroup>

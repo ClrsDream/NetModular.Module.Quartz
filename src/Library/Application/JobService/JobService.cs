@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NetModular.Lib.Quartz.Abstractions;
-using NetModular.Lib.Utils.Core.Extensions;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Quartz.Application.JobService.ViewModels;
 using NetModular.Module.Quartz.Domain.Job;
 using NetModular.Module.Quartz.Domain.Job.Models;
@@ -29,7 +27,7 @@ namespace NetModular.Module.Quartz.Application.JobService
         private readonly ILogger _logger;
         private readonly IQuartzServer _quartzServer;
         private readonly QuartzDbContext _dbContext;
-        private readonly string _httpJobClass = $"{typeof(HttpJob).FullName}, {typeof(HttpJob).Assembly.GetName().Name}";
+        private readonly string _httpJobClass = $"{typeof(HttpTask).FullName}, {typeof(HttpTask).Assembly.GetName().Name}";
 
         public JobService(IMapper mapper, IJobRepository repository, ILogger<JobService> logger, IQuartzServer quartzServer, IJobLogRepository logRepository, QuartzDbContext dbContext, IJobHttpRepository jobHttpRepository)
         {

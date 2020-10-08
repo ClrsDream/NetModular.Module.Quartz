@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NetModular.Lib.Auth.Web.Attributes;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Quartz.Application.GroupService;
 using NetModular.Module.Quartz.Application.GroupService.ViewModels;
 using NetModular.Module.Quartz.Domain.Group.Models;
@@ -37,9 +36,9 @@ namespace NetModular.Module.Quartz.Web.Controllers
 
         [HttpDelete]
         [Description("删除")]
-        public async Task<IResultModel> Delete([BindRequired]Guid id)
+        public Task<IResultModel> Delete([BindRequired]Guid id)
         {
-            return await _service.Delete(id);
+            return _service.Delete(id);
         }
 
         /// <summary>
@@ -48,9 +47,9 @@ namespace NetModular.Module.Quartz.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [Common]
-        public async Task<IResultModel> Select()
+        public Task<IResultModel> Select()
         {
-            return await _service.Select();
+            return _service.Select();
         }
     }
 }
